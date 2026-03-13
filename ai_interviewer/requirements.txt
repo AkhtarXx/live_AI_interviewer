@@ -1,0 +1,8 @@
+fastapi[all]
+google-genai
+websockets
+python-dotenv
+pymupdf
+pydantic
+uvicorn
+python-multipart

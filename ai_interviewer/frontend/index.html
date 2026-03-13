@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live AI Interviewer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- Screen 1: Upload Resume -->
+    <div class="glass-container" id="upload-screen">
+        <h1>Welcome to your AI Interview</h1>
+        <p>Upload your resume and our AI interviewer, Aisha, will conduct a personalized live interview with you.</p>
+        
+        <input type="file" id="resume-upload" accept="application/pdf">
+        <label for="resume-upload" class="btn">Select PDF Resume</label>
+
+        <div class="language-selector-group">
+            <label for="language-selector">Interview Language</label>
+            <select id="language-selector">
+                <option value="en" selected>English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="hi">Hindi</option>
+                <option value="zh">Mandarin Chinese</option>
+                <option value="ja">Japanese</option>
+                <option value="ko">Korean</option>
+                <option value="pt">Portuguese</option>
+                <option value="ar">Arabic</option>
+            </select>
+        </div>
+
+        <div class="language-selector-group">
+            <label for="model-selector">AI Model</label>
+            <select id="model-selector">
+                <option value="gemini-2.5-flash" selected>Gemini 2.5 Flash — Full Features (emotion-aware, proactive)</option>
+                <option value="gemini-3.1-flash">Gemini 3.1 Flash — Lower Latency (faster, better tool use)</option>
+            </select>
+        </div>
+
+        <button id="start-btn" class="btn primary-btn" disabled>Start Interview</button>
+        <div id="upload-status"></div>
+    </div>
+
+    <!-- Screen 2: Live Interview Room -->
+    <div class="glass-container" id="interview-screen" style="display: none;">
+        <div class="header">
+            <h2>Live Interview Room</h2>
+            <div id="connection-status">Connecting...</div>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-container">
+                <video id="user-video" autoplay muted playsinline></video>
+                <div class="label">You</div>
+            </div>
+            
+            <div class="ai-container">
+                <div class="ai-avatar">
+                   <div class="pulse-ring"></div>
+                   <div class="ai-icon">👩‍💼</div>
+                </div>
+                <div class="label">Aisha — AI Interviewer</div>
+                <div class="thinking-indicator">Aisha is thinking...</div>
+            </div>
+        </div>
+
+        <div class="interview-content">
+            <div class="transcript-panel">
+                <h3>Live Transcript</h3>
+                <div id="transcript-box" class="transcript-box"></div>
+            </div>
+
+            <div id="scoring-sidebar">
+                <h3>Live Scoring</h3>
+                <div id="scoring-placeholder">Interview in progress — scores will appear as topics are covered.</div>
+                <div id="score-bars"></div>
+                <div id="scoring-summary">
+                    <div id="average-score">Average: —</div>
+                    <div id="topic-count">0 topics assessed</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="share-screen-btn" class="btn">Share Screen</button>
+            <button id="stop-share-btn" class="btn danger-btn" style="display:none">Stop Sharing</button>
+            <button id="end-btn" class="btn danger-btn">End Interview</button>
+        </div>
+
+        <div id="screen-share-preview" style="display:none">
+            <video id="screen-share-video" autoplay playsinline muted></video>
+        </div>
+    </div>
+
+    <!-- Screen 3: Interview Report -->
+    <div class="glass-container" id="report-screen" style="display: none;">
+        <h2>📋 Interview Report</h2>
+        <div id="report-loading" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Generating your interview report...</p>
+        </div>
+        <div id="report-content"></div>
+        <div class="controls" style="margin-top: 30px;">
+            <button class="btn primary-btn" onclick="location.reload()">Start New Interview</button>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
